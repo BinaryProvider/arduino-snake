@@ -402,7 +402,7 @@ void drawLevel(byte level, byte color) {
 		vgaUtils.draw_line_safe(borderX + 40, borderY + 22, borderX + 40, (borderY + borderHeight) - 14, color);
 		vgaUtils.draw_line_safe(borderX + 50, borderY + 14, borderX + 50, (borderY + borderHeight) - 6, color);
 	}
-	else if (level == 1)
+	else if (level == 10)
 	{
 		vgaUtils.draw_line_safe((borderX + borderWidth) - 10, borderY + 14, (borderX + borderWidth) - 10, (borderY + borderHeight) - 7, color);
 		vgaUtils.draw_line_safe(borderX + 10, borderY + 14, (borderX + borderWidth) - 10, borderY + 14, color);
