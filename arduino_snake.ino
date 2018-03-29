@@ -466,7 +466,7 @@ void drawFood() {
 		score += 10;
 		eatCount++;
 
-		if (eatCount == 1)
+		if (eatCount == 10)
 		{
 			nextLevel();
 		}
