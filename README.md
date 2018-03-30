@@ -13,6 +13,7 @@ My first Arduino project. I set out to create a classic arcade game and it ended
 * VGA output (using [Sandro Maffiodo's VGAX library](https://github.com/smaffer/vgax))
 
 ## Requirements
+* Arduino IDE v1.6.4 ([can be found here](https://www.arduino.cc/en/Main/OldSoftwareReleases))
 * 1x Arduino UNO
 * 1x Arcade joystick
 * 1x Arcade button
