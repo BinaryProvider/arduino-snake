@@ -13,4 +13,5 @@ C:\Users\John\AppData\Local\Temp\VMBuilds\arduino_snake\uno\Debug\arduino_snake.
  C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\variants\standard/pins_arduino.h \
  C:\Program\ Files\ (x86)\Arduino\libraries\VGAX\src/VGAX.h \
  C:\Program\ Files\ (x86)\Arduino\hardware\arduino\avr\cores\arduino/Arduino.h \
- C:\Program\ Files\ (x86)\Arduino\libraries\VGAX\src/VGAXUtils.h
+ C:\Program\ Files\ (x86)\Arduino\libraries\VGAX\src/VGAXUtils.h \
+ C:\Users\John\AppData\Local\Temp\VMBuilds\arduino_snake\uno\Debug\pitches.h

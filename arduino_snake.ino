@@ -1,5 +1,6 @@
 #include <VGAX.h>
 #include <VGAXUtils.h>
+#include "pitches.h"
 
 #define FTN_HEIGHT 6
 #define FTN_SYMBOLS_COUNT 95
@@ -123,6 +124,7 @@ static const char str8[] PROGMEM = "8";
 static const char str9[] PROGMEM = "9";
 static const char strStart[] PROGMEM = "PRESS START!";
 static const char strGameOver[] PROGMEM = "GAME OVER";
+static const char strLevel1[] PROGMEM = "LEVEL 1";
 static const char strLevel2[] PROGMEM = "LEVEL 2";
 static const char strLevel3[] PROGMEM = "LEVEL 3";
 static const char strLevel4[] PROGMEM = "LEVEL 4";
@@ -187,6 +189,8 @@ int snakeSegment;
 int score = 0;
 int prevScore = -1;
 
+bool playIntro = true;
+
 void setup() {
 
 	vga.begin();
@@ -207,6 +211,7 @@ void nextLevel() {
 
 	currentLevel++;
 	snakeDelay -= 5;
+	score += 1000;
 
 	vga.clear(0);
 
@@ -248,15 +253,15 @@ void nextLevel() {
 	}
 	else
 	{
-		for (int i = 0; i < 24; i++)
-		{
-			vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strCompleted, 2, (VGAX_HEIGHT / 2) - 3, (i % 3) + 1);
-			vga.delay(100);
-		}
-		reset();
-		gameState = 0;
+		gameState = 3;
 		return;
 	}
+
+	vga.delay(500);
+	playNote(NOTE_C4, 150);
+	playNote(NOTE_C4, 150);
+	playNote(NOTE_C4, 150);
+	playNote(NOTE_F4, 300);
 
 	vga.delay(2000);
 	vga.clear(0);
@@ -334,18 +339,28 @@ void drawBorders(byte color) {
 }
 
 void drawLevel(byte level, byte color) {
-	if (level == 2)
+	if (level == 1)
 	{
+		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strLevel1, VGAX_WIDTH - 31, 0, COLOR_GREEN);
+	} 
+	else if (level == 2)
+	{
+		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strLevel2, VGAX_WIDTH - 32, 0, COLOR_GREEN);
+
 		vgaUtils.draw_line_safe(borderX + 20, borderY + 20, borderX + 20, (borderY + borderHeight) - 12, color);
 		vgaUtils.draw_line_safe((borderX + borderWidth) - 20, borderY + 20, (borderX + borderWidth) - 20, (borderY + borderHeight) - 12, color);	
 	}
 	else if (level == 3)
 	{
+		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strLevel3, VGAX_WIDTH - 32, 0, COLOR_GREEN);
+
 		vgaUtils.draw_line_safe(borderX + 30, borderY + 17, (borderX + borderWidth) - 30, borderY + 17, color); 
 		vgaUtils.draw_line_safe(borderX + 30, (borderY + borderHeight) - 10, (borderX + borderWidth) - 30, (borderY + borderHeight) - 10, color); 
 	}
 	else if (level == 4)
 	{
+		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strLevel4, VGAX_WIDTH - 32, 0, COLOR_GREEN);
+
 		vgaUtils.draw_line_safe(borderX + 30, borderY + 17, (borderX + borderWidth) - 30, borderY + 17, color); 
 		vgaUtils.draw_line_safe(borderX + 30, (borderY + borderHeight) - 10, (borderX + borderWidth) - 30, (borderY + borderHeight) - 10, color); 
 		vgaUtils.draw_line_safe(borderX + 15, borderY + 20, borderX + 15, (borderY + borderHeight) - 12, color); 
@@ -353,6 +368,8 @@ void drawLevel(byte level, byte color) {
 	}
 	else if (level == 5)
 	{
+		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strLevel5, VGAX_WIDTH - 32, 0, COLOR_YELLOW);
+
 		vgaUtils.draw_line_safe(borderX + 15, borderY + 17, (borderX + borderWidth) - 30, borderY + 17, color);
 		vgaUtils.draw_line_safe(borderX + 30, (borderY + borderHeight) - 10, (borderX + borderWidth) - 14, (borderY + borderHeight) - 10, color);
 		vgaUtils.draw_line_safe(borderX + 15, borderY + 17, borderX + 15, (borderY + borderHeight) - 12, color);
@@ -360,6 +377,8 @@ void drawLevel(byte level, byte color) {
 	}
 	else if (level == 6)
 	{
+		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strLevel6, VGAX_WIDTH - 32, 0, COLOR_YELLOW);
+
 		vgaUtils.draw_line_safe(borderX + 10, borderY + 15, borderX + 20, borderY + 15, color);
 		vgaUtils.draw_line_safe(borderX + 20, borderY + 15, borderX + 20, borderY + 25, color);
 		vgaUtils.draw_line_safe(borderX + 20, borderY + 25, borderX + 40, borderY + 25, color);
@@ -378,6 +397,8 @@ void drawLevel(byte level, byte color) {
 	}
 	else if (level == 7)
 	{
+		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strLevel7, VGAX_WIDTH - 32, 0, COLOR_YELLOW);
+
 		vgaUtils.draw_line_safe(borderX + 10, borderY + 14, borderX + 10, (borderY + borderHeight) - 6, color);
 		vgaUtils.draw_line_safe(borderX + 20, borderY + 14, borderX + 20, (borderY + borderHeight) - 6, color);
 		vgaUtils.draw_line_safe(borderX + 30, borderY + 14, borderX + 30, (borderY + borderHeight) - 6, color);
@@ -388,6 +409,8 @@ void drawLevel(byte level, byte color) {
 	}
 	else if (level == 8)
 	{
+		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strLevel8, VGAX_WIDTH - 32, 0, COLOR_RED);
+
 		vgaUtils.draw_line_safe(borderX + 10, borderY + 32, borderX + 30, borderY + 32, color);
 		vgaUtils.draw_line_safe((borderX + borderWidth) - 10, borderY + 32, (borderX + borderWidth) - 30, borderY + 32, color);
 		vgaUtils.draw_line_safe(borderX + 40, borderY + 18, (borderX + borderWidth) - 40, borderY + 18, color);
@@ -395,6 +418,8 @@ void drawLevel(byte level, byte color) {
 	}
 	else if (level == 9)
 	{
+		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strLevel9, VGAX_WIDTH - 32, 0, COLOR_RED);
+
 		vgaUtils.draw_line_safe((borderX + borderWidth) - 10, borderY + 14, (borderX + borderWidth) - 10, (borderY + borderHeight) - 6, color);
 		vgaUtils.draw_line_safe((borderX + borderWidth) - 20, borderY + 22, (borderX + borderWidth) - 20, (borderY + borderHeight) - 14, color);
 		vgaUtils.draw_line_safe((borderX + borderWidth) - 30, borderY + 14, (borderX + borderWidth) - 30, (borderY + borderHeight) - 6, color);
@@ -409,6 +434,8 @@ void drawLevel(byte level, byte color) {
 	}
 	else if (level == 10)
 	{
+		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strLevel10, VGAX_WIDTH - 36, 0, COLOR_RED);
+
 		vgaUtils.draw_line_safe((borderX + borderWidth) - 10, borderY + 14, (borderX + borderWidth) - 10, (borderY + borderHeight) - 7, color);
 		vgaUtils.draw_line_safe(borderX + 10, borderY + 14, (borderX + borderWidth) - 10, borderY + 14, color);
 		vgaUtils.draw_line_safe(borderX + 10, (borderY + borderHeight) - 7, (borderX + borderWidth) - 9, (borderY + borderHeight) - 7, color);
@@ -451,8 +478,8 @@ void seedFood() {
 		vga.putpixel(foodX, foodY, COLOR_BLACK);
 	}
 
-	foodX = random(borderX + 6, (borderX + borderWidth) - 6);
-	foodY = random(borderY + 14, (borderY + borderHeight) - 14);
+	foodX = random(borderX + 4, (borderX + borderWidth) - 4);
+	foodY = random(borderY + 12, (borderY + borderHeight) - 12);
 
 	if (vga.getpixel(foodX, foodY) == COLOR_RED || vga.getpixel(foodX, foodY) == COLOR_GREEN)
 	{
@@ -460,6 +487,7 @@ void seedFood() {
 		return;
 	}
 
+	playNote(NOTE_F6, 50);
 	vga.putpixel(foodX, foodY, COLOR_YELLOW);
 	foodTimer = 0;
 }
@@ -470,6 +498,8 @@ void drawFood() {
 		snakeLength = clamp(snakeLength + 5, snakeMaxLength, 1);
 		score += 10;
 		eatCount++;
+
+		playNote(NOTE_C6, 100);
 
 		if (eatCount == 10)
 		{
@@ -483,7 +513,11 @@ void drawFood() {
 		if (foodTimer >= foodLife)
 		{
 			score -= 5;
-			score = clamp(score, 999999, 0);
+
+			if (score < 0) {
+				score = 0;
+			}
+
 			seedFood();
 		}
 	}
@@ -573,13 +607,15 @@ void loop() {
 	// MENU
 	if (gameState == 0)
 	{
-		/*vga.delay(100);
+		vga.delay(100);
 
-		vgaUtils.draw_line_safe(0, VGAX_HEIGHT - 21, VGAX_WIDTH, VGAX_HEIGHT - 21, (counter % 3) + 1);
+		/*vgaUtils.draw_line_safe(0, VGAX_HEIGHT - 21, VGAX_WIDTH, VGAX_HEIGHT - 21, (counter % 3) + 1);
 		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strStart, (VGAX_WIDTH / 2) - 28, (VGAX_HEIGHT / 2) - 3, (counter % 3) + 1);
 		vgaUtils.draw_line_safe(0, 20, VGAX_WIDTH, 20, (counter % 3) + 1);*/
 
 		vga.copy((byte*)img_splash_data);
+
+		playIntroSong();
 
 		if (actionButton == 1)
 		{
@@ -644,6 +680,7 @@ void loop() {
 		}
 		else
 		{
+			playNote(NOTE_C3, 100);
 			vga.clear(0);
 			gameState = 2;
 		}
@@ -664,6 +701,9 @@ void loop() {
 	else if (gameState == 2)
 	{
 		vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strGameOver, (VGAX_WIDTH / 2) - 23, (VGAX_HEIGHT / 2) - 3, COLOR_RED);
+		vga.delay(250);
+		playNote(NOTE_C3, 300);
+		playNote(NOTE_F2, 300);
 		vga.delay(2000);
 		reset();
 		gameState = 0;
@@ -672,7 +712,24 @@ void loop() {
 	// COMPLETED GAME
 	else if (gameState == 3)
 	{
+		for (byte i = 0; i < 4; i++)
+		{
+			for (byte j = 0; j < 12; j++)
+			{
+				vga.printPROGMEM((byte*)fnt_data, FTN_SYMBOLS_COUNT, FTN_HEIGHT, 1, 1, strCompleted, 2, (VGAX_HEIGHT / 2) - 3, (j % 3) + 1);
+				vga.delay(100);
+			}
 
+			playNote(NOTE_C4, 150);
+			playNote(NOTE_C4, 150);
+			playNote(NOTE_C4, 150);
+			playNote(NOTE_E4, 300);
+			playNote(NOTE_C4, 150);
+			playNote(NOTE_G4, 400);
+		}
+
+		reset();
+		gameState = 0;
 	}
 
 	vga.delay(30);
@@ -688,7 +745,39 @@ void reset() {
 	borderWidth = VGAX_WIDTH;
 	borderHeight = VGAX_HEIGHT;
 	currentLevel = 1;
+	snakeDelay = 60;
+	playIntro = true;
 	initSnake();
+}
+
+void playIntroSong() {
+	if (playIntro) {
+		vga.delay(500);
+		playNote(NOTE_A4, 83);
+		vga.delay(108);
+		playNote(NOTE_C5, 83);
+		vga.delay(108);
+		playNote(NOTE_B4, 83);
+		vga.delay(108);
+		playNote(NOTE_A4, 83);
+		vga.delay(108);
+		playNote(NOTE_A4, 83);
+		vga.delay(108);
+		playNote(NOTE_D5, 83);
+		vga.delay(108);
+		playNote(NOTE_C5, 83);
+		vga.delay(108);
+		playNote(NOTE_B4, 83);
+		vga.delay(108);
+		playIntro = false;
+	}
+}
+
+void playNote(int note, int delay)
+{
+	vga.tone(note);
+	vga.delay(delay);
+	vga.noTone();
 }
 
 byte clamp(byte val, byte upper, byte lower)
