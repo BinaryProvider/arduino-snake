@@ -1,7 +1,5 @@
 # arduino-snake
 
-https://youtu.be/-_qcucpLkBM
-
 [<img width='100%' src='http://wip.johnhellbom.com/github/arduino-snake/arduino_snake_video.png'/>](https://www.youtube.com/watch?v=-_qcucpLkBM)
 
 My first Arduino project. I set out to create a classic arcade game and it ended up with being Snake for simplicity, while focusing on the actual learning.
