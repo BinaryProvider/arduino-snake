@@ -1,7 +1,7 @@
 # arduino-snake
 
-[<img width='20%' src='http://wip.johnhellbom.com/github/arduino-snake/arduino_snake_screenshot1.png'/>]
-[<img width='20%' src='http://wip.johnhellbom.com/github/arduino-snake/arduino_snake_screenshot2.png'/>]
+[<img width='20%' src='http://wip.johnhellbom.com/github/arduino-snake/arduino_snake_screenshot1.png'/>](http://wip.johnhellbom.com/github/arduino-snake/arduino_snake_screenshot1.png)
+[<img width='20%' src='http://wip.johnhellbom.com/github/arduino-snake/arduino_snake_screenshot2.png'/>](http://wip.johnhellbom.com/github/arduino-snake/arduino_snake_screenshot2.png)
 
 My first Arduino project. I set out to create a classic arcade game and it ended up with being Snake for simplicity, while focusing on the actual learning.
 
